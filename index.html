@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Pizarra de Reservas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<div class="app">
+
+  <header class="topbar">
+
+    <div>
+
+      <h1>📋 Pizarra de Reservas</h1>
+
+      <div id="rangoSemana"></div>
+
+    </div>
+
+
+    <div class="controles">
+
+      <button id="semanaAnterior">←</button>
+
+      <button id="hoy">Hoy</button>
+
+      <button id="semanaSiguiente">→</button>
+
+      <button id="nuevaReserva" class="btn-principal">
+        + Nueva Reserva
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <!-- PIZARRA -->
+
+  <main id="pizarra" class="pizarra"></main>
+
+
+  <!-- NOTAS -->
+
+  <section class="seccion-notas">
+
+    <div class="titulo-notas">
+
+      <h2>NOTAS</h2>
+
+      <button id="nuevaNota" class="btn-principal">
+        + Agregar nota
+      </button>
+
+    </div>
+
+    <div id="notas"></div>
+
+  </section>
+
+</div>
+
+
+<!-- =====================================================
+     MODAL PARA RESERVAS
+===================================================== -->
+
+<div id="modalReserva" class="modal-fondo">
+
+  <div class="modal">
+
+    <div class="modal-header">
+
+      <h2 id="tituloModal">
+        Nueva Reserva
+      </h2>
+
+      <button id="cerrarModal" class="cerrar">
+        ×
+      </button>
+
+    </div>
+
+
+    <input type="hidden" id="reservaId">
+
+
+    <label>Día de entrada</label>
+
+    <select id="fechaReserva"></select>
+
+
+    <label>Propiedad</label>
+
+    <input
+      type="text"
+      id="propiedad"
+      placeholder="Ej. MOM"
+    >
+
+
+    <label>Cliente</label>
+
+    <input
+      type="text"
+      id="cliente"
+      placeholder="Ej. Carlos"
+    >
+
+
+    <label>Personas</label>
+
+    <input
+      type="number"
+      id="personas"
+      min="1"
+      value="1"
+    >
+
+
+    <label>Noches</label>
+
+    <input
+      type="number"
+      id="noches"
+      min="1"
+      value="1"
+    >
+
+
+    <label>Tipo de reserva</label>
+
+    <select id="tipoReserva">
+
+      <option value="SELF">
+        ➜ Self Check-In
+      </option>
+
+      <option value="CHECKIN">
+        Check-In Regular
+      </option>
+
+    </select>
+
+
+    <!-- =================================================
+         SOLO CHECK-IN REGULAR
+    ================================================== -->
+
+    <div id="grupoHora">
+
+      <label>
+        Tipo de hora de llegada
+      </label>
+
+      <select id="modoHora">
+
+        <option value="FIJA">
+          Hora fija
+        </option>
+
+        <option value="VARIABLE">
+          Hora variable
+        </option>
+
+      </select>
+
+
+      <!-- HORA FIJA -->
+
+      <div id="horaFija">
+
+        <label>
+          Hora de llegada
+        </label>
+
+        <input
+          type="time"
+          id="hora"
+        >
+
+      </div>
+
+
+      <!-- RANGO DE HORAS -->
+
+      <div
+        id="horasVariable"
+        style="display:none;"
+      >
+
+        <label>
+          Desde
+        </label>
+
+        <input
+          type="time"
+          id="horaInicio"
+        >
+
+
+        <label>
+          Hasta
+        </label>
+
+        <input
+          type="time"
+          id="horaFin"
+        >
+
+      </div>
+
+    </div>
+
+
+    <!-- =================================================
+         $$ ES INDEPENDIENTE DEL TIPO
+    ================================================== -->
+
+    <label class="checkbox">
+
+      <input
+        type="checkbox"
+        id="ventaPorCobrar"
+      >
+
+      <span>
+        $$ Venta x Cobrar
+      </span>
+
+    </label>
+
+
+    <label>
+      Nota de la reserva
+    </label>
+
+    <textarea
+      id="notaReserva"
+      placeholder="Información adicional..."
+    ></textarea>
+
+
+    <div class="botones-modal">
+
+      <button
+        id="cancelarReserva"
+        class="btn-gris"
+      >
+        Cancelar
+      </button>
+
+      <button
+        id="guardarReserva"
+        class="btn-principal"
+      >
+        Guardar Reserva
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+    <script src="/script.js"></script>
+  </body>
+
+</html>
