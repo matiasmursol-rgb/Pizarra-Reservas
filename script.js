@@ -42,13 +42,9 @@ const DIAS = [
 ========================================================= */
 
 let reservas = [];
-
 let notas = [];
-
 let fechaSemana = new Date();
-
 let reservaEditando = null;
-
 let cargandoDatos = false;
 
 
@@ -225,12 +221,8 @@ function convertirReservaDesdeSupabase(fila) {
     tipo:
       fila.tipo || "SELF",
 
-    /* HORA FIJA */
-
     hora:
       fila.hora || "",
-
-    /* RANGO */
 
     horaInicio:
       fila.hora_inicio || "",
@@ -273,7 +265,7 @@ function convertirNotaDesdeSupabase(fila) {
 
 
 /* =========================================================
-   CARGAR DATOS
+   CARGAR DATOS DESDE SUPABASE
 ========================================================= */
 
 async function cargarDatos() {
@@ -430,7 +422,7 @@ function mostrarErrorSupabase(
 
 
 /* =========================================================
-   MIGRAR DATOS ANTIGUOS
+   MIGRAR DATOS ANTIGUOS DE LOCALSTORAGE
 ========================================================= */
 
 async function migrarLocalStorage() {
@@ -464,8 +456,6 @@ async function migrarLocalStorage() {
 
     }
 
-
-    /* RESERVAS ANTIGUAS */
 
     if (
       !reservasSupabase.data ||
@@ -556,8 +546,6 @@ async function migrarLocalStorage() {
 
     }
 
-
-    /* NOTAS ANTIGUAS */
 
     if (
       !notasSupabase.data ||
@@ -758,10 +746,6 @@ function mostrarSemana() {
 function crearReserva(reserva) {
 
 
-  /* =====================================================
-     SELF CHECK-IN
-  ===================================================== */
-
   if (
     reserva.tipo === "SELF"
   ) {
@@ -833,10 +817,6 @@ function crearReserva(reserva) {
   }
 
 
-  /* =====================================================
-     CHECK-IN REGULAR
-  ===================================================== */
-
   const div =
     document.createElement(
       "div"
@@ -869,8 +849,6 @@ function crearReserva(reserva) {
       "⏰ Sin hora";
 
 
-    /* RANGO */
-
     if (
       reserva.horaInicio &&
       reserva.horaFin
@@ -880,8 +858,6 @@ function crearReserva(reserva) {
         `⏰ ${convertirHora(reserva.horaInicio)} - ${convertirHora(reserva.horaFin)}`;
 
     }
-
-    /* HORA FIJA */
 
     else if (
       reserva.hora
@@ -1052,28 +1028,23 @@ function abrirModal() {
     "SELF";
 
 
-  /* HORA FIJA */
-
   document.getElementById(
     "hora"
   ).value =
     "";
 
 
-  /* RANGO */
-
   document.getElementById(
     "horaInicio"
   ).value =
     "";
+
 
   document.getElementById(
     "horaFin"
   ).value =
     "";
 
-
-  /* MODO */
 
   modoHora.value =
     "FIJA";
@@ -1230,28 +1201,13 @@ function actualizarTipo() {
     grupoHora.style.display =
       "none";
 
-    document.getElementById(
-      "hora"
-    ).value =
-      "";
-
-    document.getElementById(
-      "horaInicio"
-    ).value =
-      "";
-
-    document.getElementById(
-      "horaFin"
-    ).value =
-      "";
-
   }
 
 }
 
 
 /* =========================================================
-   CAMBIAR ENTRE HORA FIJA Y VARIABLE
+   CAMBIAR HORA FIJA / VARIABLE
 ========================================================= */
 
 function actualizarModoHora() {
@@ -1259,12 +1215,6 @@ function actualizarModoHora() {
   if (
     tipoReserva.value !== "CHECKIN"
   ) {
-
-    horaFija.style.display =
-      "none";
-
-    horasVariable.style.display =
-      "none";
 
     return;
 
@@ -1374,10 +1324,6 @@ async function guardarReserva() {
     ).value;
 
 
-  /* =====================================================
-     VALIDACIONES
-  ===================================================== */
-
   if (!fecha) {
 
     alert(
@@ -1439,10 +1385,6 @@ async function guardarReserva() {
   }
 
 
-  /* =====================================================
-     VALIDACIÓN DE HORA FIJA
-  ===================================================== */
-
   if (
     tipo === "CHECKIN" &&
     modo === "FIJA" &&
@@ -1457,10 +1399,6 @@ async function guardarReserva() {
 
   }
 
-
-  /* =====================================================
-     VALIDACIÓN DE RANGO
-  ===================================================== */
 
   if (
     tipo === "CHECKIN" &&
@@ -1496,10 +1434,6 @@ async function guardarReserva() {
   }
 
 
-  /* =====================================================
-     DATOS PARA SUPABASE
-  ===================================================== */
-
   const datos = {
 
     fecha:
@@ -1520,8 +1454,6 @@ async function guardarReserva() {
     tipo:
       tipo,
 
-    /* HORA FIJA */
-
     hora:
       (
         tipo === "CHECKIN" &&
@@ -1529,8 +1461,6 @@ async function guardarReserva() {
       )
         ? hora
         : null,
-
-    /* RANGO */
 
     hora_inicio:
       (
@@ -1556,10 +1486,6 @@ async function guardarReserva() {
 
   };
 
-
-  /* =====================================================
-     EDITAR
-  ===================================================== */
 
   if (
     reservaEditando !== null
@@ -1629,11 +1555,6 @@ async function guardarReserva() {
     }
 
   }
-
-
-  /* =====================================================
-     NUEVA RESERVA
-  ===================================================== */
 
   else {
 
@@ -1749,10 +1670,6 @@ function editarReserva(id) {
   ).value =
     reserva.tipo;
 
-
-  /* =====================================================
-     CARGAR HORA FIJA O VARIABLE
-  ===================================================== */
 
   if (
     reserva.horaInicio &&
@@ -2370,9 +2287,7 @@ async function iniciarPizarra() {
 
   mostrarNotas();
 
-
   await migrarLocalStorage();
-
 
   await cargarDatos();
 
@@ -2384,3 +2299,15 @@ async function iniciarPizarra() {
 ========================================================= */
 
 iniciarPizarra();
+
+
+/* =========================================================
+   ACTUALIZACIÓN AUTOMÁTICA
+   CADA 2 MINUTOS
+========================================================= */
+
+setInterval(() => {
+
+  cargarDatos();
+
+}, 2 * 60 * 1000);
