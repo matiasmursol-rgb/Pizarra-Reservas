@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
-  <title>Pizarra de Reservas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Pizarra de Reservas</title>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- SUPABASE -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <div class="app">
+
+    <!-- =====================================================
+         ENCABEZADO
+    ====================================================== -->
 
     <header class="topbar">
 
@@ -24,29 +27,49 @@
       </div>
 
       <div class="controles">
-        <button id="semanaAnterior">←</button>
-        <button id="hoy">Hoy</button>
-        <button id="semanaSiguiente">→</button>
+
+        <button id="semanaAnterior">
+          ←
+        </button>
+
+        <button id="hoy">
+          Hoy
+        </button>
+
+        <button id="semanaSiguiente">
+          →
+        </button>
 
         <button id="nuevaReserva" class="btn-principal">
           + Nueva Reserva
         </button>
+
       </div>
 
     </header>
 
-    <!-- PIZARRA -->
+
+    <!-- =====================================================
+         PIZARRA
+    ====================================================== -->
+
     <main id="pizarra" class="pizarra"></main>
 
-    <!-- NOTAS -->
+
+    <!-- =====================================================
+         NOTAS
+    ====================================================== -->
+
     <section class="seccion-notas">
 
       <div class="titulo-notas">
+
         <h2>NOTAS</h2>
 
         <button id="nuevaNota" class="btn-principal">
           + Agregar nota
         </button>
+
       </div>
 
       <div id="notas"></div>
@@ -55,7 +78,11 @@
 
   </div>
 
-  <!-- MODAL PARA RESERVAS -->
+
+  <!-- =====================================================
+       MODAL PARA RESERVAS
+  ====================================================== -->
+
   <div id="modalReserva" class="modal-fondo">
 
     <div class="modal">
@@ -72,12 +99,24 @@
 
       </div>
 
+
       <input type="hidden" id="reservaId">
 
-      <label>Día de entrada</label>
+
+      <!-- DÍA -->
+
+      <label>
+        Día de entrada
+      </label>
+
       <select id="fechaReserva"></select>
 
-      <label>Propiedad</label>
+
+      <!-- PROPIEDAD -->
+
+      <label>
+        Propiedad
+      </label>
 
       <input
         type="text"
@@ -85,7 +124,12 @@
         placeholder="Ej. MOM"
       >
 
-      <label>Cliente</label>
+
+      <!-- CLIENTE -->
+
+      <label>
+        Cliente
+      </label>
 
       <input
         type="text"
@@ -93,7 +137,12 @@
         placeholder="Ej. Carlos"
       >
 
-      <label>Personas</label>
+
+      <!-- PERSONAS -->
+
+      <label>
+        Personas
+      </label>
 
       <input
         type="number"
@@ -102,7 +151,12 @@
         value="1"
       >
 
-      <label>Noches</label>
+
+      <!-- NOCHES -->
+
+      <label>
+        Noches
+      </label>
 
       <input
         type="number"
@@ -111,7 +165,12 @@
         value="1"
       >
 
-      <label>Tipo de reserva</label>
+
+      <!-- TIPO -->
+
+      <label>
+        Tipo de reserva
+      </label>
 
       <select id="tipoReserva">
 
@@ -125,7 +184,10 @@
 
       </select>
 
-      <!-- SOLO CHECK-IN REGULAR -->
+
+      <!-- =================================================
+           HORARIO CHECK-IN REGULAR
+      ================================================== -->
 
       <div id="grupoHora">
 
@@ -145,6 +207,7 @@
 
         </select>
 
+
         <!-- HORA FIJA -->
 
         <div id="horaFija">
@@ -159,6 +222,7 @@
           >
 
         </div>
+
 
         <!-- RANGO DE HORAS -->
 
@@ -189,7 +253,10 @@
 
       </div>
 
-      <!-- $$ ES INDEPENDIENTE DEL TIPO -->
+
+      <!-- =================================================
+           VENTA POR COBRAR
+      ================================================== -->
 
       <label class="checkbox">
 
@@ -204,6 +271,11 @@
 
       </label>
 
+
+      <!-- =================================================
+           NOTA
+      ================================================== -->
+
       <label>
         Nota de la reserva
       </label>
@@ -212,6 +284,11 @@
         id="notaReserva"
         placeholder="Información adicional..."
       ></textarea>
+
+
+      <!-- =================================================
+           BOTONES
+      ================================================== -->
 
       <div class="botones-modal">
 
@@ -235,7 +312,18 @@
 
   </div>
 
-  <!-- JAVASCRIPT -->
+
+  <!-- =====================================================
+       SUPABASE
+  ====================================================== -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ====================================================== -->
+
   <script src="script.js"></script>
 
 </body>
